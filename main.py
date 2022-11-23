@@ -26,7 +26,7 @@ class Student():
         return "\033[1;34m" + f"\nStudent ID = {self.id + 1}\n" + "\033[0;0m" \
             f"Name is {self.name.title()}, grade for the first two months is {self.grade1:.2f}, " \
             f"and for the second {self.grade2:.2f}.\n" \
-            f"Average = {self.average:.2f} and student is {self.Approved()}.\n"
+            f"Average = {self.average:.2f} and student is {self.Approved()}."
 
     def PrintGrades(self) -> str:
         return f"\n{self.name.title()} got {self.grade1:.2f} in the first two months and {self.grade2:.2f} in the second.\n" \
@@ -104,6 +104,8 @@ def ListStudents(students: list) -> None:
     for student in students:
         print(student)
 
+    print("")
+
 def GradesByStudentName(students: list, name: str):
     control = 0 # check if printed or no
 
@@ -144,7 +146,7 @@ if __name__ == "__main__":
             clear()
 
             if(students != []):
-                overwrite = str(input("\nDo you want to overwrite students? Y/y or N/n"))
+                overwrite = str(input("\nDo you want to overwrite students? Y/y or N/n\n"))
 
                 if((overwrite == 'S') or (overwrite == 's')):
                     students = RegisterStudent()
