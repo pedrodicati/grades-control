@@ -23,7 +23,7 @@ class Student():
             return 'APPROVED'
 
     def __repr__(self) -> str:
-        return f"\nStudent ID = {self.id}\n" \
+        return "\033[1;34m" + f"\nStudent ID = {self.id + 1}\n" + "\033[0;0m" \
             f"Name is {self.name.title()}, grade for the first two months is {self.grade1:.2f}, " \
             f"and for the second {self.grade2:.2f}.\n" \
             f"Average = {self.average:.2f} and student is {self.Approved()}.\n"
@@ -39,30 +39,68 @@ def clear() -> None:
         os.system("clear")
 
 def RegisterStudent() -> list:
-    clear()
     students = []
 
-    for i in range(0, 5): # alter to 20 after
-        print("\nStudent %d" % i)
+    for i in range(0, 2): # alter to 20 after
+        print("\033[1;34m" + "\nStudent %d" % (i + 1) + "\033[0;0m")
         name = str(input("Enter the name...\n"))
 
-        grade1 = float(input("Enter the grade for the first two months...\n"))
-        while((grade1 < 0) or (grade1 > 10)):
-            print("\nThe grade must be in a range of 0 to 10!")
-            grade1 = float(input("Retype the grade for the first two months...\n"))
+        try:
+            grade1 = float(input("Enter the grade for the first two months...\n"))
+        except ValueError: # letters and other non-numeric characters
+            while(True):
+                grade1 = input("Enter a valid numeric value for the grade...\n")
 
-        grade2 = float(input("Enter the grade for the second two months...\n"))
+                try:
+                    grade1 = int(grade1)
+                except ValueError:
+                    continue
+                break
+        while((grade1 < 0) or (grade1 > 10)):
+            print("\033[1;31m" + "\nThe grade must be in a range of 0 to 10!" + "\033[0;0m")
+            try:
+                grade1 = float(input("Enter the grade for the first two months...\n"))
+            except ValueError:
+                while(True):
+                    grade1 = input("Enter a valid numeric value for the grade...\n")
+
+                    try:
+                        grade1 = int(grade1)
+                    except ValueError:
+                        continue
+                    break
+
+        try:
+            grade2 = float(input("Enter the grade for the first two months...\n"))
+        except ValueError:
+            while(True):
+                grade2 = input("Enter a valid numeric value for the grade...\n")
+
+                try:
+                    grade2 = int(grade2)
+                except ValueError:
+                    continue
+                break
         while((grade2 < 0) or (grade2 > 10)):
-            print("\nThe grade must be in a range of 0 to 10!")
-            grade2 = float(input("Retype the grade for the second two months...\n"))
+            print("\033[1;31m" + "\nThe grade must be in a range of 0 to 10!" + "\033[0;0m")
+            try:
+                grade2 = float(input("Enter the grade for the first two months...\n"))
+            except ValueError:  # letters and other non-numeric characters
+                while(True):
+                    grade2 = input("Enter a valid numeric value for the grade...\n")
+
+                    try:
+                        grade2 = int(grade2)
+                    except ValueError:
+                        continue
+                    break
         
         students.append(Student(id=i, name=name, grade1=grade1, grade2=grade2))
     
+    print()
     return students
 
 def ListStudents(students: list) -> None:
-    clear()
-
     for student in students:
         print(student)
 
@@ -76,40 +114,57 @@ def GradesByStudentName(students: list, name: str):
 
     if control == 0:
         print("\nStudent not found! :(\n")
-    
+
 if __name__ == "__main__":
     students = []
 
     while(True):
-        print("\tMENU")
+        print("\033[0;32m" + "\tOPTIONS" + "\033[0;0m")
         print("1 - Register student (store name and grades)")
         print("2 - List all students")
         print("3 - See grade by student name")
-        print("4 - Exclude students")
         print("0 - Exit\n")
 
-        option = int(input("Choose an option: "))
+        # exception handling
+        try:
+            option = int(input("Choose an option value: "))
+        except ValueError:
+            try:
+                option = int(input("Please enter a valid value: "))
+            except ValueError:
+                clear()
+                continue
+            
+        # validation selection option
+        if((option < 0) or (option > 3)):
+            print("\n\033[0;93m" + "The range of option choice must be between 0 and 3" + "\033[0;0m\n")
+            continue
 
         if (option == 1):
+            clear()
+
             if(students != []):
-                overwrite = str(input("Do you want to overwrite students? Y/y or N/n"))
+                overwrite = str(input("\nDo you want to overwrite students? Y/y or N/n"))
 
                 if((overwrite == 'S') or (overwrite == 's')):
                     students = RegisterStudent()
                 else:
-                    print("Maintained students.\n")
+                    print("\nMaintained students.\n")
             else:
                 students = RegisterStudent()
         elif (option == 2):
+            clear()
+            
             if (students == []):
-                print("No students registered!\n")
+                print("\nNo students registered!\n")
             else:
                 ListStudents(students)
         elif (option == 3):
-            name_student = str(input("Enter the name for search...\n"))
+            clear()
+
+            name_student = str(input("\nEnter the name for search...\n"))
 
             GradesByStudentName(students, name_student)
-        elif (option == 4):
-            pass
         elif (option == 0):
+            clear()
             break
