@@ -23,15 +23,14 @@ class Student():
             return 'APPROVED'
 
     def __repr__(self) -> str:
-        return f"Student ID = {self.id}" \
+        return f"\nStudent ID = {self.id}\n" \
             f"Name is {self.name.title()}, grade for the first two months is {self.grade1:.2f}, " \
             f"and for the second {self.grade2:.2f}.\n" \
-            f"Average = {self.average:.2f} and student is {self.Approved()}\n"
+            f"Average = {self.average:.2f} and student is {self.Approved()}.\n"
 
     def PrintGrades(self) -> str:
-        return f"{self.name.title()} got {self.grade1:.2f} in the first two months and {self.grade2:.2f} in the second" \
-            f"His final average is {self.average:.2f} and it's {self.Approved()}"
-
+        return f"\n{self.name.title()} got {self.grade1:.2f} in the first two months and {self.grade2:.2f} in the second.\n" \
+            f"His final average is {self.average:.2f} and it's {self.Approved()}."
 
 def clear() -> None:
     if system() == 'Windows':
@@ -39,9 +38,10 @@ def clear() -> None:
     else:
         os.system("clear")
 
-def RegisterStudent(students: list) -> list:
+def RegisterStudent() -> list:
     clear()
-    
+    students = []
+
     for i in range(0, 5): # alter to 20 after
         print("\nStudent %d" % i)
         name = str(input("Enter the name...\n"))
@@ -62,10 +62,21 @@ def RegisterStudent(students: list) -> list:
 
 def ListStudents(students: list) -> None:
     clear()
-    
+
     for student in students:
         print(student)
 
+def GradesByStudentName(students: list, name: str):
+    control = 0 # check if printed or no
+
+    for student in students:
+        if name.lower() in student.name.lower().split():
+            print(student.PrintGrades() + "\n")
+            control = 1
+
+    if control == 0:
+        print("\nStudent not found! :(\n")
+    
 if __name__ == "__main__":
     students = []
 
@@ -73,17 +84,31 @@ if __name__ == "__main__":
         print("\tMENU")
         print("1 - Register student (store name and grades)")
         print("2 - List all students")
-        print("3 - See grade by studant name")
+        print("3 - See grade by student name")
+        print("4 - Exclude students")
         print("0 - Exit\n")
 
         option = int(input("Choose an option: "))
 
         if (option == 1):
-            students = RegisterStudent(students)
+            if(students != []):
+                overwrite = str(input("Do you want to overwrite students? Y/y or N/n"))
+
+                if((overwrite == 'S') or (overwrite == 's')):
+                    students = RegisterStudent()
+                else:
+                    print("Maintained students.\n")
+            else:
+                students = RegisterStudent()
         elif (option == 2):
-            ListStudents(students)
+            if (students == []):
+                print("No students registered!\n")
+            else:
+                ListStudents(students)
         elif (option == 3):
-            pass
+            name_student = str(input("Enter the name for search...\n"))
+
+            GradesByStudentName(students, name_student)
         elif (option == 4):
             pass
         elif (option == 0):
