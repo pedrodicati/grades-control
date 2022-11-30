@@ -38,7 +38,7 @@ class Student():
             # preciso colocar os 2 underline mesmo tendo o getter que retorna o valor?
 
     def Approved(self) -> str:
-        if self.average >= 6:
+        if self.average < 6.0:
             return 'NOT APPROVED'
         else:
             return 'APPROVED'
@@ -215,20 +215,26 @@ if __name__ == "__main__":
             else:
                 ListStudents(students)
         elif (option == 3):
-            clear()
+            if(students == []):
+                print("\nNo students registered!\n")
+            else:    
+                clear()
 
-            name_student = str(input("\nEnter the name for search...\n"))
+                name_student = str(input("\nEnter the name for search...\n"))
 
-            GradesByStudentName(students, name_student)
+                GradesByStudentName(students, name_student)
         elif (option == 4):
             clear()
 
-            ListStudents(students)
-            idStudent = (int(input("Select student ID to edit...\n")) - 1)
-            
-            clear()
+            if(students == []):
+                print("\nNo students registered!\n")
+            else:
+                ListStudents(students)
+                idStudent = (int(input("Select student ID to edit...\n")) - 1)
+                
+                clear()
 
-            EditStudent(students=students, idStudent=idStudent)
+                EditStudent(students=students, idStudent=idStudent)
         elif (option == 0):
             clear()
             break
