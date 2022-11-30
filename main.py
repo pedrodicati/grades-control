@@ -25,30 +25,22 @@ class Student():
         return self.__grade1
 
     @grade1.setter
-    def grade1(self, newGrade: float) -> bool:
+    def grade1(self, newGrade: float) -> None:
         if((newGrade >= 0) and (newGrade <= 10)):
             self.__grade1 = newGrade
             self.__average = (self.__grade1 + self.__grade2) / 2.0
             # preciso colocar os 2 underline mesmo tendo o getter que retorna o valor?
-
-            return True
-        else:
-            return False
 
     @property
     def grade2(self):
         return self.__grade2
 
     @grade2.setter
-    def grade2(self, newGrade: float) -> bool:
+    def grade2(self, newGrade: float) -> None:
         if((newGrade >= 0) and (newGrade <= 10)):
             self.__grade2 = newGrade
             self.__average = (self.__grade1 + self.__grade2) / 2.0
             # preciso colocar os 2 underline mesmo tendo o getter que retorna o valor?
-
-            return True
-        else:
-            return False
 
     def Approved(self) -> str:
         if self.approved == 0:
