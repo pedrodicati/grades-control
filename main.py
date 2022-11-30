@@ -10,11 +10,6 @@ class Student():
         self.__grade2 = grade2
 
         self.__average = (self.__grade1 + self.__grade2) / 2.0
-
-        if(self.__average >= 6.0):
-            self.approved = 1
-        else:
-            self.approved = 0
     
     @property
     def average(self):
@@ -43,7 +38,7 @@ class Student():
             # preciso colocar os 2 underline mesmo tendo o getter que retorna o valor?
 
     def Approved(self) -> str:
-        if self.approved == 0:
+        if self.average >= 6:
             return 'NOT APPROVED'
         else:
             return 'APPROVED'
